@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Add Bookings</title>
+		<link href="/stylesheets/tablestyle.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+	{% if user %}
+		<p>{{ welcome }} {{ user.email() }} </p>
+		<form method="post">
+			Room Name:<input type="text" name="name" value="{{ myrooms.key.id() }}" disabled /><br/>
+			Start Date:<input type="date" name="start_date" /><br/>
+			To Date:<input type="date" name="to_date" /><br/>
+			<input type="submit" name="button" value="AddBookings" />
+			<input type="submit" value="Go back" name="cancel" />
+		</form>
+	{% else %}
+		<p>Hello guest welcome to the application</p>
+	{% endif %}
+		<p>you can {{ url_string }} <a href='{{ url }}'>here</a></p>
+		
+	<p>Below you will see all the Bookings's that are currently made for this room:</p>
+		<table>
+		<tbody>
+				<tr>
+					<td> Start Date </td>
+					<td> To Date</td> 
+				</tr>
+			{% for mybookings in myrooms.bookings %}
+				<tr>
+					<td> {{ mybookings.start_date }} </td>
+					<td> till {{ mybookings.to_date }} </td>
+					<td><form method="post"><input type="hidden" value="{{ loop.index }}" name="index"/><input type="submit" name="button" value="delete"/></form></td> 
+				</tr>
+			{% endfor %}
+		</tbody>
+		</table>	
+	</body>
+</html>

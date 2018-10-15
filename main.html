@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>My Webapp</title>
+		<link href="/stylesheets/tablestyle.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+	<h1 style="text-align:center;"> Welcome to the Hotel Booking Web Application!!!</h1>
+	<h5 style="text-align:center;"> Refresh to see changes if any update </h5>
+		{% if user %}
+		<p>{{ welcome }} {{ user.email() }} </p>
+		<h3> You can Add a Room over here: </h3>
+		<form method="post">
+			<p>Room Name:<input type="text" name="name" /></p>
+			<p><input type="submit" value="submit" /></p>
+		</form>
+		{% else %}
+			<p>Hello guest welcome to the application</p>
+		{% endif %}
+		<p>you can {{ url_string }} <a href='{{ url }}'>here</a></p>
+		<h1 style="text-align:center;"> Room's & its bookings </h1>
+		<h3> Click on "Manage Bookings" to add a new booking & To search for a particular booking click on "Filter" button</h3>
+		<h4> Note: You have to login first</h4>
+		
+		<form method="get">
+			<input type="date" name="date" />
+			<input type="submit" value="filter" />
+			</form>
+		</br>		
+			{% for myrooms in room_array %}
+				{{ myrooms.key.id() }} <a href="/add?name={{ myrooms.key.id() }}"><form><input type ="button" name="manage" value="ManageBookings"/></form></a>		
+				<table>
+				<tbody>
+					{% for mybookings in myrooms.bookings %}
+					<tr>
+						<td> {{ mybookings.start_date }} </td>
+						<td> till {{ mybookings.to_date }} </td>
+					</tr>
+					{% endfor %}
+				</tbody>
+				</table>
+			</br>
+			{% endfor %}
+	</body>
+	</html>
